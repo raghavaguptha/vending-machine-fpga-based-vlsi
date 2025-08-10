@@ -1,0 +1,67 @@
+timescale 1ns / 1ps
+
+module tb_vending_machine_with_price;
+
+reg clk;
+reg rst;
+reg select;
+reg [3:0] quantity;
+reg [7:0] price_per_item;
+wire [3:0] dispense;
+wire [7:0] cost;
+wire [7:0] total;
+
+vending_machine_with_price uut (
+    .clk(clk),
+    .rst(rst),
+    .select(select),
+    .quantity(quantity),
+    .price_per_item(price_per_item),
+    .dispense(dispense),
+    .cost(cost),
+    .total(total)
+);
+
+// clock generation: 10ns period
+always #5 clk = ~clk;
+
+initial begin
+    clk = 0;
+    rst = 1;
+    select = 0;
+    quantity = 0;
+    price_per_item = 8'd10; // price per item = 10
+
+    #10;
+    rst = 0;
+
+    // Select 2 items
+    #10;
+    quantity = 4'd2;
+    select = 1;
+
+    #20;
+    select = 0;
+
+    // Select 3 items
+    #20;
+    quantity = 4'd3;
+    select = 1;
+
+    #20;
+    select = 0;
+
+    // Change price per item to 15, buy 2 items
+    #20;
+    price_per_item = 8'd15;
+    quantity = 4'd2;
+    select = 1;
+
+    #20;
+    select = 0;
+
+    #20;
+    $finish;
+end
+
+endmodule
