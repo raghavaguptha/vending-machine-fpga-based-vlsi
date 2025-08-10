@@ -1,0 +1,30 @@
+module vending_machine_with_price(
+    input clk,                    // clock
+    input rst,                    // reset
+    input select,                 // user press to confirm
+    input [3:0] quantity,         // items selected
+    input [7:0] price_per_item,   // price of each item
+    output reg [3:0] dispense,    // items dispensed
+    output reg [7:0] cost,        // total cost
+    output reg [7:0] total        // total cost (same as cost)
+);
+
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        dispense <= 0;
+        cost <= 0;
+        total <= 0;
+    end else begin
+        if (select) begin
+            dispense <= quantity;                     // dispense selected number
+            cost <= quantity * price_per_item;        // total cost
+            total <= quantity * price_per_item;       // total = cost
+        end else begin
+            dispense <= 0;
+            cost <= 0;
+            total <= 0;
+        end
+    end
+end
+
+endmodule
