@@ -94,6 +94,5 @@ Example:
 
 ---
 
-Do you want me to also make a **shorter, eye-catching version** so your GitHub visitors see the summary at a glance before the details? That would help make your project stand out more.
 
 
